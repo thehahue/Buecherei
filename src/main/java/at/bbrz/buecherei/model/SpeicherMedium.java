@@ -1,0 +1,31 @@
+package at.bbrz.buecherei.model;
+
+import at.bbrz.buecherei.model.enums.Genere;
+import at.bbrz.buecherei.model.enums.Zustand;
+
+public class SpeicherMedium extends Medium {
+    private int spielDauer;
+    private int teile;
+
+    public SpeicherMedium(String inventarNummer, String title, Genere genre, Zustand zustand, int spielDauer, int teile) {
+        super(inventarNummer, title, genre, zustand);
+        this.spielDauer = spielDauer;
+        this.teile = teile;
+    }
+
+    @Override
+    public String toString() {
+        return "SpeicherMedium{" +
+                "spielDauer=" + spielDauer +
+                ", teile=" + teile +
+                "} " + super.toString();
+    }
+
+    public int getSpielDauer() {
+        return spielDauer;
+    }
+
+    public int getTeile() {
+        return teile;
+    }
+}
