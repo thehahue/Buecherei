@@ -7,5 +7,6 @@ public enum Genere {
     SCIFI,
     MAGAZIN,
     IT,
-    METAL
+    METAL,
+    CLASSIC
 }

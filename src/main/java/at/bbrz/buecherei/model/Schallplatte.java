@@ -13,12 +13,8 @@ public class Schallplatte extends SpeicherMedium{
 
     @Override
     public String toString() {
-        return "Schallplatte{" +
-                "anzahlLieder=" + anzahlLieder +
-                "} " + super.toString();
-    }
-
-    public int getAnzahlLieder() {
-        return anzahlLieder;
+        return super.toString()+
+                "Typ: " + getType() + "\n"+
+                "Anzahl Lieder: " + anzahlLieder;
     }
 }

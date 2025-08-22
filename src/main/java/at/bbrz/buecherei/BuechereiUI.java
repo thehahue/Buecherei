@@ -469,10 +469,19 @@ public class BuechereiUI extends JFrame {
                 "978-35515533333",
                 82,
                 "Medien Gmbh");
+
+        Schallplatte schallplatte = new Schallplatte("S0001",
+                "Four dimensions",
+                Genere.CLASSIC,
+                Zustand.NEU,
+                90,
+                1,
+                12);
         
         medienListe.add(buch);
         medienListe.add(dvd);
         medienListe.add(javaMagzin);
+        medienListe.add(schallplatte);
         updateTable();
     }
 
