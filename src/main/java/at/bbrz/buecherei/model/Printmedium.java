@@ -15,10 +15,10 @@ public abstract class Printmedium extends Medium {
 
     @Override
     public String toString() {
-        return "Printmedium{" +
-                "isbn='" + isbn + '\'' +
-                ", seiten=" + seiten +
-                "} " + super.toString();
+        return super.toString()+"\n"+
+                "ISBN: " + isbn + "\n" +
+                "Seiten: " + seiten + "\n"+
+                "Type: " + getType();
     }
 
     public String getIsbn() {

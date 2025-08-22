@@ -15,9 +15,8 @@ public class Buch extends Printmedium {
 
     @Override
     public String toString() {
-        return "Buch{\n" +
-                "klappenText='" + klappenText + "\'\n" +
-                "author=" + author + "\n"+
-                "} \n" + super.toString();
+        return super.toString()+ "\n" +
+                "Klappentext: " + klappenText + "\n" +
+                "Autor: " + author.getName();
     }
 }
