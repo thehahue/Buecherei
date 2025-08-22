@@ -16,10 +16,10 @@ public class DVD extends SpeicherMedium {
 
     @Override
     public String toString() {
-        return "DVD{" +
-                "regiseur='" + regiseur + '\'' +
-                ", fsk=" + fsk +
-                "} " + super.toString();
+        return super.toString() +
+                "Typ: " + getType() + "\n" +
+                "Regisseur: " + regiseur + '\n' +
+                "FSK: " + fsk + '\n';
     }
 
     public String getRegiseur() {

@@ -405,8 +405,8 @@ public class BuechereiUI extends JFrame {
         // Textbereich mit Scroll-Pane
         JTextArea detailsTextArea = new JTextArea();
         detailsTextArea.setEditable(false);
-        detailsTextArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
-        detailsTextArea.setText(medium.toString());
+        detailsTextArea.setFont(new Font("Monospaced", Font.PLAIN, 18));
+        detailsTextArea.setText("=== MEDIUM DETAILS ===\n\n"+medium.toString());
 
         JScrollPane scrollPane = new JScrollPane(detailsTextArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);

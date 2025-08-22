@@ -15,10 +15,9 @@ public class SpeicherMedium extends Medium {
 
     @Override
     public String toString() {
-        return "SpeicherMedium{" +
-                "spielDauer=" + spielDauer +
-                ", teile=" + teile +
-                "} " + super.toString();
+        return super.toString()+
+                "\nSpieldauer: " + spielDauer +" Minuten\n"+
+                "Teile: " + teile+"\n";
     }
 
     public int getSpielDauer() {

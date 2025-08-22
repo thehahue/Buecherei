@@ -30,13 +30,12 @@ public abstract class Medium {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("Medium{");
-        sb.append("inventarNummer='").append(inventarNummer).append('\'');
-        sb.append(", title='").append(title).append('\'');
-        sb.append(", genre=").append(genre);
-        sb.append(", ausgeliehen=").append(ausgeliehen);
-        sb.append(", zustand=").append(zustand);
-        sb.append('}');
+        final StringBuffer sb = new StringBuffer();
+        sb.append("Inventar-Nr: ").append(inventarNummer).append("\n");
+        sb.append("Titel: ").append(title).append("\n");
+        sb.append("Genre: ").append(genre).append("\n");
+        sb.append("Zustand: ").append(zustand).append("\n");
+        sb.append("Ausgeliehen: ").append(ausgeliehen ? "Ja" : "Nein").append("\n");
         return sb.toString();
     }
 
