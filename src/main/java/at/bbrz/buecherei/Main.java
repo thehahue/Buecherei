@@ -6,6 +6,8 @@ import at.bbrz.buecherei.model.Magazin;
 import at.bbrz.buecherei.model.Printmedium;
 import at.bbrz.buecherei.model.enums.Genere;
 import at.bbrz.buecherei.model.enums.Zustand;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Main {
     public static void main(String[] args) {
@@ -51,6 +53,13 @@ public class Main {
         System.out.println(javaMagzin);
         ausgabePrintMedium(javaMagzin);
 
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            String magazinJsonString = objectMapper.writeValueAsString(javaMagzin);
+            System.out.println(magazinJsonString);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 /*    private static void ausgabeBuch(Buch buch) {
