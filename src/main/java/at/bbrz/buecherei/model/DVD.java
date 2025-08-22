@@ -9,7 +9,7 @@ public class DVD extends SpeicherMedium {
     private Fsk fsk;
 
     public DVD(String inventarNummer, String title, Genere genre, Zustand zustand, int spielDauer, int teile, String regiseur, Fsk fsk) {
-        super(inventarNummer, title, genre, zustand, spielDauer, teile);
+        super(inventarNummer, title, genre, zustand, spielDauer, teile, "DVD");
         this.regiseur = regiseur;
         this.fsk = fsk;
     }

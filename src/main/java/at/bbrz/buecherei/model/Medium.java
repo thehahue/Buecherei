@@ -9,17 +9,23 @@ public abstract class Medium {
     private Genere genre;
     private boolean ausgeliehen;
     private Zustand zustand;
+    private String type;
 
-    protected Medium(String inventarNummer, String title, Genere genre, Zustand zustand) {
+    protected Medium(String inventarNummer, String title, Genere genre, Zustand zustand, String type) {
         this.inventarNummer = inventarNummer;
         this.title = title;
         this.genre = genre;
         this.zustand = zustand;
         this.ausgeliehen = false;
+        this.type = type;
     }
 
     public void ausleihen() {
         this.ausgeliehen = true;
+    }
+
+    public void rueckgabe() {
+        this.ausgeliehen = false;
     }
 
     @Override
@@ -52,6 +58,10 @@ public abstract class Medium {
 
     public Zustand getZustand() {
         return zustand;
+    }
+
+    public String getType() {
+        return type;
     }
 }
 

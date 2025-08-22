@@ -7,8 +7,8 @@ public abstract class Printmedium extends Medium {
     private String isbn;
     private int seiten;
 
-    public Printmedium(String inventarNummer, String title, Genere genre, Zustand zustand, String isbn, int seiten) {
-        super(inventarNummer, title, genre, zustand);
+    public Printmedium(String inventarNummer, String title, Genere genre, Zustand zustand, String isbn, int seiten, String type) {
+        super(inventarNummer, title, genre, zustand, type);
         this.isbn = isbn;
         this.seiten = seiten;
     }

@@ -40,7 +40,7 @@ public class BuechereiUI extends JFrame {
 
         JButton addButton = new JButton("Medium hinzufügen");
         JButton deleteButton = new JButton("Medium löschen");
-        JButton lendButton = new JButton("Ausleihen");
+        JButton lendButton = new JButton("Ausleihen/Rückgabe");
         JButton showDetailsButton = new JButton("Details anzeigen");
 
         buttonPanel.add(addButton);
@@ -375,6 +375,7 @@ public class BuechereiUI extends JFrame {
         Medium medium = medienListe.get(selectedRow);
         if (medium.isAusgeliehen()) {
             // Medium zurückgeben
+            medium.rueckgabe();
             JOptionPane.showMessageDialog(this, "Medium wurde zurückgegeben.", "Rückgabe", JOptionPane.INFORMATION_MESSAGE);
         } else {
             // Medium ausleihen
@@ -398,16 +399,10 @@ public class BuechereiUI extends JFrame {
     private void updateTable() {
         tableModel.setRowCount(0);
         for (Medium medium : medienListe) {
-            String typ = "";
-            if (medium instanceof Buch) typ = "Buch";
-            else if (medium instanceof Magazin) typ = "Magazin";
-            else if (medium instanceof DVD) typ = "DVD";
-            else if (medium instanceof Schallplatte) typ = "Schallplatte";
-            
             tableModel.addRow(new Object[]{
                 medium.getInventarNummer(),
                 medium.getTitle(),
-                typ,
+                medium.getType(),
                 medium.getGenre(),
                 medium.getZustand(),
                 medium.isAusgeliehen() ? "Ja" : "Nein"
