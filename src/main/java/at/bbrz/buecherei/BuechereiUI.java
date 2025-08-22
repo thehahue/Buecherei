@@ -393,7 +393,35 @@ public class BuechereiUI extends JFrame {
         }
         
         Medium medium = medienListe.get(selectedRow);
-        JOptionPane.showMessageDialog(this, medium.toString(), "Details", JOptionPane.INFORMATION_MESSAGE);
+        showDetailsWindow(medium);
+    }
+
+    private void showDetailsWindow(Medium medium) {
+        JDialog detailsDialog = new JDialog(this, "Medium Details", true);
+        detailsDialog.setSize(500, 400);
+        detailsDialog.setLayout(new BorderLayout());
+        detailsDialog.setLocationRelativeTo(this);
+
+        // Textbereich mit Scroll-Pane
+        JTextArea detailsTextArea = new JTextArea();
+        detailsTextArea.setEditable(false);
+        detailsTextArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        detailsTextArea.setText(medium.toString());
+
+        JScrollPane scrollPane = new JScrollPane(detailsTextArea);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+        detailsDialog.add(scrollPane, BorderLayout.CENTER);
+
+        // Schließen-Button
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JButton closeButton = new JButton("Schließen");
+        closeButton.addActionListener(e -> detailsDialog.dispose());
+        buttonPanel.add(closeButton);
+
+        detailsDialog.add(buttonPanel, BorderLayout.SOUTH);
+        detailsDialog.setVisible(true);
     }
 
     private void updateTable() {
