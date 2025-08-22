@@ -18,7 +18,7 @@ public abstract class Printmedium extends Medium {
         return super.toString()+"\n"+
                 "ISBN: " + isbn + "\n" +
                 "Seiten: " + seiten + "\n"+
-                "Type: " + getType();
+                "Type: " + getType() + "\n";
     }
 
     public String getIsbn() {

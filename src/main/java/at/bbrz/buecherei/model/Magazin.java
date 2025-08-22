@@ -17,8 +17,7 @@ public class Magazin extends Printmedium {
 
     @Override
     public String toString() {
-        return "Magazin{" +
-                "redaktion='" + redaktion + '\'' +
-                "} " + super.toString();
+        return super.toString() +
+                "Redaktion: " + redaktion + "\n";
     }
 }

@@ -461,9 +461,18 @@ public class BuechereiUI extends JFrame {
             "Christopher Nolan", 
             Fsk.FSK_12
         );
+
+        Magazin javaMagzin = new Magazin("000003",
+                "Java Magazin 01/2025",
+                Genere.IT,
+                Zustand.NEU,
+                "978-35515533333",
+                82,
+                "Medien Gmbh");
         
         medienListe.add(buch);
         medienListe.add(dvd);
+        medienListe.add(javaMagzin);
         updateTable();
     }
 
