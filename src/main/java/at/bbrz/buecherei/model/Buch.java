@@ -19,4 +19,12 @@ public class Buch extends Printmedium {
                 "Klappentext: " + klappenText + "\n" +
                 "Autor: " + author.getName();
     }
+
+    public String getKlappenText() {
+        return klappenText;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
 }
