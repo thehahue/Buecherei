@@ -2,8 +2,10 @@ package at.bbrz.buecherei.model;
 
 import at.bbrz.buecherei.model.enums.Genere;
 import at.bbrz.buecherei.model.enums.Zustand;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public abstract class Medium {
+    @JsonProperty("inventarNr")
     private String inventarNummer;
     private String title;
     private Genere genre;
