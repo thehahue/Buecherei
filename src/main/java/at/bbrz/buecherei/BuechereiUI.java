@@ -47,11 +47,13 @@ public class BuechereiUI extends JFrame {
         mainPanel.add(buttonPanel, BorderLayout.NORTH);
 
         JButton addButton = new JButton("Medium hinzufügen");
+        JButton editButton = new JButton("Medium editieren");
         JButton deleteButton = new JButton("Medium löschen");
         JButton lendButton = new JButton("Ausleihen/Rückgabe");
         JButton showDetailsButton = new JButton("Details anzeigen");
 
         buttonPanel.add(addButton);
+        buttonPanel.add(editButton);
         buttonPanel.add(deleteButton);
         buttonPanel.add(lendButton);
         buttonPanel.add(showDetailsButton);
@@ -77,6 +79,13 @@ public class BuechereiUI extends JFrame {
             }
         });
 
+        editButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editMediumDialog();
+            }
+        });
+
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -97,6 +106,94 @@ public class BuechereiUI extends JFrame {
                 showDetails();
             }
         });
+    }
+
+    private void editMediumDialog() {
+        int selectedRow = medienTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Bitte wählen Sie ein Medium aus.",
+                    "Hinweis", JOptionPane.INFORMATION_MESSAGE);
+            
+            return;
+        }
+        Medium medium = medienListe.get(selectedRow);
+
+        if (medium instanceof Buch) {
+            showEditBuchDialog(medium, selectedRow);
+        }
+    }
+
+    private void showEditBuchDialog(Medium medium, int selectedRow) {
+        Buch buch = (Buch) medium; // Cast medium to Book
+
+        JDialog dialog = new JDialog(this, "Buch bearbeiten", true);
+        dialog.setSize(500, 400);
+        dialog.setLayout(new BorderLayout());
+
+        JPanel panel = new JPanel(new GridLayout(0, 2, 5, 5));
+
+        JTextField invNrField = new JTextField(buch.getInventarNummer());
+        JTextField titleField = new JTextField(buch.getTitle());
+        JComboBox<Genere> genereJComboBox = new JComboBox<>(Genere.values());
+        genereJComboBox.setSelectedItem(buch.getGenre());
+        JComboBox<Zustand> zustandJComboBox = new JComboBox<>(Zustand.values());
+        zustandJComboBox.setSelectedItem(buch.getZustand());
+        JTextField isbnField = new JTextField(buch.getIsbn());
+        JTextField seitenField =  new JTextField(""+buch.getSeiten());
+        JTextField klappenTextField = new JTextField(buch.getKlappenText());
+        JTextField authorTextField = new JTextField(buch.getAuthor() != null ? buch.getAuthor().getName() : "");
+
+//        String inhalt;
+//        if (buch.getAuthor() != null) {
+//            inhalt = buch.getAuthor().getName();
+//        } else {
+//            inhalt = "";
+//        }
+//        JTextField authorTextField = new JTextField(inhalt);
+
+
+        panel.add(new JLabel("Inventar-Nr:"));
+        panel.add(invNrField);
+
+        panel.add(new JLabel("Titel:"));
+        panel.add(titleField);
+
+        panel.add(new JLabel("Genre:"));
+        panel.add(genereJComboBox);
+
+        panel.add(new JLabel("Zustand:"));
+        panel.add(zustandJComboBox);
+
+        panel.add(new JLabel("ISBN:"));
+        panel.add(isbnField);
+
+        panel.add(new JLabel("Seiten:"));
+        panel.add(seitenField);
+
+        panel.add(new JLabel("Klappen Text:"));
+        panel.add(klappenTextField);
+
+        panel.add(new JLabel("Author:"));
+        panel.add(authorTextField);
+
+        JButton saveButton = new JButton("Speichern");
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO nächste Mal
+            }
+        });
+
+        JPanel wrapper = new  JPanel(new BorderLayout());
+        wrapper.add(panel, BorderLayout.CENTER);
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.add(saveButton);
+        wrapper.add(buttonPanel, BorderLayout.SOUTH);
+
+
+        dialog.add(wrapper, BorderLayout.CENTER);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 
     private void addMediumDialog() {
@@ -464,7 +561,7 @@ public class BuechereiUI extends JFrame {
         Buch buch = new Buch(
             "B001", 
             "Der Herr der Ringe", 
-            Genere.FANTASY, 
+            Genere.HORROR,
             Zustand.LEICHT_GEBRAUCHT, 
             "978-3608939812", 
             1216, 
