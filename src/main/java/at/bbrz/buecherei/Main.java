@@ -1,16 +1,18 @@
 package at.bbrz.buecherei;
 
-import at.bbrz.buecherei.model.Author;
-import at.bbrz.buecherei.model.Buch;
-import at.bbrz.buecherei.model.Magazin;
-import at.bbrz.buecherei.model.Printmedium;
+import at.bbrz.buecherei.model.*;
 import at.bbrz.buecherei.model.enums.Genere;
 import at.bbrz.buecherei.model.enums.Zustand;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
+
+
         Buch harryPotter1 = new Buch("00001",
                 "Harry Potter und der Stein der Weisen",
                 Genere.FANTASY,
@@ -53,10 +55,24 @@ public class Main {
         System.out.println(javaMagzin);
         ausgabePrintMedium(javaMagzin);
 
+        List<Medium> magazins = new ArrayList<>();
+        magazins.add(javaMagzin);
+        magazins.add(harryPotter1);
+        magazins.add(harryPotter2);
+
+
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            String magazinJsonString = objectMapper.writeValueAsString(javaMagzin);
+            String magazinJsonString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(javaMagzin);
             System.out.println(magazinJsonString);
+
+            String buchString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(harryPotter1);
+            System.out.println(buchString);
+
+            String magazinesJsonString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(magazins);
+
+            System.out.println(magazinesJsonString);
+
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
