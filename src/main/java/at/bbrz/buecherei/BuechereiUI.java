@@ -22,12 +22,12 @@ public class BuechereiUI extends JFrame {
     private JTable medienTable;
     private DefaultTableModel tableModel;
     private ObjectMapper objectMapper;
-    private File file ;
+    private File file;
 
     public BuechereiUI() {
         medienListe = new ArrayList<>();
         objectMapper = new ObjectMapper();
-        file= new File("mediums.json");
+        file = new File("mediums.json");
         initializeUI();
         createSampleData();
     }
@@ -113,7 +113,7 @@ public class BuechereiUI extends JFrame {
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Bitte wählen Sie ein Medium aus.",
                     "Hinweis", JOptionPane.INFORMATION_MESSAGE);
-            
+
             return;
         }
         Medium medium = medienListe.get(selectedRow);
@@ -139,7 +139,7 @@ public class BuechereiUI extends JFrame {
         JComboBox<Zustand> zustandJComboBox = new JComboBox<>(Zustand.values());
         zustandJComboBox.setSelectedItem(buch.getZustand());
         JTextField isbnField = new JTextField(buch.getIsbn());
-        JTextField seitenField =  new JTextField(""+buch.getSeiten());
+        JTextField seitenField = new JTextField("" + buch.getSeiten());
         JTextField klappenTextField = new JTextField(buch.getKlappenText());
         JTextField authorTextField = new JTextField(buch.getAuthor() != null ? buch.getAuthor().getName() : "");
 
@@ -180,26 +180,28 @@ public class BuechereiUI extends JFrame {
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               Buch updated = new Buch(invNrField.getText(),
-                       titleField.getText(),
-                       (Genere) genereJComboBox.getSelectedItem(),
-                       (Zustand) zustandJComboBox.getSelectedItem(),
-                       isbnField.getText(),
-                       Integer.parseInt(seitenField.getText()),
-                       klappenTextField.getText(),
-                       new Author(authorTextField.getText()));
+                Buch updated = new Buch(invNrField.getText(),
+                        titleField.getText(),
+                        (Genere) genereJComboBox.getSelectedItem(),
+                        (Zustand) zustandJComboBox.getSelectedItem(),
+                        isbnField.getText(),
+                        Integer.parseInt(seitenField.getText()),
+                        klappenTextField.getText(),
+                        new Author(authorTextField.getText()));
 
-               if (buch.isAusgeliehen()) {
-                   updated.ausleihen();
-               } else {
-                   updated.rueckgabe();
-               }
+                if (buch.isAusgeliehen()) {
+                    updated.ausleihen();
+                } else {
+                    updated.rueckgabe();
+                }
 
-                System.out.println(updated);
+                medienListe.set(selectedRow, updated); //Wir tauschen buch mit updated an Stelle selectedRow
+                updateTable();
+                dialog.dispose();
             }
         });
 
-        JPanel wrapper = new  JPanel(new BorderLayout());
+        JPanel wrapper = new JPanel(new BorderLayout());
         wrapper.add(panel, BorderLayout.CENTER);
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonPanel.add(saveButton);
@@ -217,19 +219,19 @@ public class BuechereiUI extends JFrame {
         dialog.setLayout(new BorderLayout());
 
         JTabbedPane tabbedPane = new JTabbedPane();
-        
+
         // Buch-Panel
         JPanel buchPanel = createBuchPanel(dialog);
         tabbedPane.addTab("Buch", buchPanel);
-        
+
         // Magazin-Panel
         JPanel magazinPanel = createMagazinPanel(dialog);
         tabbedPane.addTab("Magazin", magazinPanel);
-        
+
         // DVD-Panel
         JPanel dvdPanel = createDVDPanel(dialog);
         tabbedPane.addTab("DVD", dvdPanel);
-        
+
         // Schallplatte-Panel
         JPanel schallplattePanel = createSchallplattePanel(dialog);
         tabbedPane.addTab("Schallplatte", schallplattePanel);
@@ -241,7 +243,7 @@ public class BuechereiUI extends JFrame {
 
     private JPanel createBuchPanel(JDialog dialog) {
         JPanel panel = new JPanel(new GridLayout(0, 2, 5, 5));
-        
+
         JTextField invNrField = new JTextField();
         JTextField titleField = new JTextField();
         JComboBox<Genere> genreCombo = new JComboBox<>(Genere.values());
@@ -250,7 +252,7 @@ public class BuechereiUI extends JFrame {
         JTextField seitenField = new JTextField();
         JTextField klappenTextField = new JTextField();
         JTextField authorField = new JTextField();
-        
+
         panel.add(new JLabel("Inventar-Nr:"));
         panel.add(invNrField);
         panel.add(new JLabel("Titel:"));
@@ -267,21 +269,21 @@ public class BuechereiUI extends JFrame {
         panel.add(klappenTextField);
         panel.add(new JLabel("Autor:"));
         panel.add(authorField);
-        
+
         JButton saveButton = new JButton("Speichern");
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     Buch buch = new Buch(
-                        invNrField.getText(),
-                        titleField.getText(),
-                        (Genere) genreCombo.getSelectedItem(),
-                        (Zustand) zustandCombo.getSelectedItem(),
-                        isbnField.getText(),
-                        Integer.parseInt(seitenField.getText()),
-                        klappenTextField.getText(),
-                        new Author(authorField.getText())
+                            invNrField.getText(),
+                            titleField.getText(),
+                            (Genere) genreCombo.getSelectedItem(),
+                            (Zustand) zustandCombo.getSelectedItem(),
+                            isbnField.getText(),
+                            Integer.parseInt(seitenField.getText()),
+                            klappenTextField.getText(),
+                            new Author(authorField.getText())
                     );
                     medienListe.add(buch);
                     updateTable();
@@ -291,16 +293,16 @@ public class BuechereiUI extends JFrame {
                 }
             }
         });
-        
+
         panel.add(new JLabel());
         panel.add(saveButton);
-        
+
         return panel;
     }
 
     private JPanel createMagazinPanel(JDialog dialog) {
         JPanel panel = new JPanel(new GridLayout(0, 2, 5, 5));
-        
+
         JTextField invNrField = new JTextField();
         JTextField titleField = new JTextField();
         JComboBox<Genere> genreCombo = new JComboBox<>(Genere.values());
@@ -308,7 +310,7 @@ public class BuechereiUI extends JFrame {
         JTextField isbnField = new JTextField();
         JTextField seitenField = new JTextField();
         JTextField redaktionField = new JTextField();
-        
+
         panel.add(new JLabel("Inventar-Nr:"));
         panel.add(invNrField);
         panel.add(new JLabel("Titel:"));
@@ -323,20 +325,20 @@ public class BuechereiUI extends JFrame {
         panel.add(seitenField);
         panel.add(new JLabel("Redaktion:"));
         panel.add(redaktionField);
-        
+
         JButton saveButton = new JButton("Speichern");
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     Magazin magazin = new Magazin(
-                        invNrField.getText(),
-                        titleField.getText(),
-                        (Genere) genreCombo.getSelectedItem(),
-                        (Zustand) zustandCombo.getSelectedItem(),
-                        isbnField.getText(),
-                        Integer.parseInt(seitenField.getText()),
-                        redaktionField.getText()
+                            invNrField.getText(),
+                            titleField.getText(),
+                            (Genere) genreCombo.getSelectedItem(),
+                            (Zustand) zustandCombo.getSelectedItem(),
+                            isbnField.getText(),
+                            Integer.parseInt(seitenField.getText()),
+                            redaktionField.getText()
                     );
                     medienListe.add(magazin);
                     updateTable();
@@ -346,16 +348,16 @@ public class BuechereiUI extends JFrame {
                 }
             }
         });
-        
+
         panel.add(new JLabel());
         panel.add(saveButton);
-        
+
         return panel;
     }
 
     private JPanel createDVDPanel(JDialog dialog) {
         JPanel panel = new JPanel(new GridLayout(0, 2, 5, 5));
-        
+
         JTextField invNrField = new JTextField();
         JTextField titleField = new JTextField();
         JComboBox<Genere> genreCombo = new JComboBox<>(Genere.values());
@@ -364,7 +366,7 @@ public class BuechereiUI extends JFrame {
         JTextField teileField = new JTextField();
         JTextField regiseurField = new JTextField();
         JComboBox<Fsk> fskCombo = new JComboBox<>(Fsk.values());
-        
+
         panel.add(new JLabel("Inventar-Nr:"));
         panel.add(invNrField);
         panel.add(new JLabel("Titel:"));
@@ -381,21 +383,21 @@ public class BuechereiUI extends JFrame {
         panel.add(regiseurField);
         panel.add(new JLabel("FSK:"));
         panel.add(fskCombo);
-        
+
         JButton saveButton = new JButton("Speichern");
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     DVD dvd = new DVD(
-                        invNrField.getText(),
-                        titleField.getText(),
-                        (Genere) genreCombo.getSelectedItem(),
-                        (Zustand) zustandCombo.getSelectedItem(),
-                        Integer.parseInt(spielDauerField.getText()),
-                        Integer.parseInt(teileField.getText()),
-                        regiseurField.getText(),
-                        (Fsk) fskCombo.getSelectedItem()
+                            invNrField.getText(),
+                            titleField.getText(),
+                            (Genere) genreCombo.getSelectedItem(),
+                            (Zustand) zustandCombo.getSelectedItem(),
+                            Integer.parseInt(spielDauerField.getText()),
+                            Integer.parseInt(teileField.getText()),
+                            regiseurField.getText(),
+                            (Fsk) fskCombo.getSelectedItem()
                     );
                     medienListe.add(dvd);
                     updateTable();
@@ -405,16 +407,16 @@ public class BuechereiUI extends JFrame {
                 }
             }
         });
-        
+
         panel.add(new JLabel());
         panel.add(saveButton);
-        
+
         return panel;
     }
 
     private JPanel createSchallplattePanel(JDialog dialog) {
         JPanel panel = new JPanel(new GridLayout(0, 2, 5, 5));
-        
+
         JTextField invNrField = new JTextField();
         JTextField titleField = new JTextField();
         JComboBox<Genere> genreCombo = new JComboBox<>(Genere.values());
@@ -422,7 +424,7 @@ public class BuechereiUI extends JFrame {
         JTextField spielDauerField = new JTextField();
         JTextField teileField = new JTextField();
         JTextField liederField = new JTextField();
-        
+
         panel.add(new JLabel("Inventar-Nr:"));
         panel.add(invNrField);
         panel.add(new JLabel("Titel:"));
@@ -437,20 +439,20 @@ public class BuechereiUI extends JFrame {
         panel.add(teileField);
         panel.add(new JLabel("Anzahl Lieder:"));
         panel.add(liederField);
-        
+
         JButton saveButton = new JButton("Speichern");
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     Schallplatte schallplatte = new Schallplatte(
-                        invNrField.getText(),
-                        titleField.getText(),
-                        (Genere) genreCombo.getSelectedItem(),
-                        (Zustand) zustandCombo.getSelectedItem(),
-                        Integer.parseInt(spielDauerField.getText()),
-                        Integer.parseInt(teileField.getText()),
-                        Integer.parseInt(liederField.getText())
+                            invNrField.getText(),
+                            titleField.getText(),
+                            (Genere) genreCombo.getSelectedItem(),
+                            (Zustand) zustandCombo.getSelectedItem(),
+                            Integer.parseInt(spielDauerField.getText()),
+                            Integer.parseInt(teileField.getText()),
+                            Integer.parseInt(liederField.getText())
                     );
                     medienListe.add(schallplatte);
                     updateTable();
@@ -460,10 +462,10 @@ public class BuechereiUI extends JFrame {
                 }
             }
         });
-        
+
         panel.add(new JLabel());
         panel.add(saveButton);
-        
+
         return panel;
     }
 
@@ -473,12 +475,12 @@ public class BuechereiUI extends JFrame {
             JOptionPane.showMessageDialog(this, "Bitte wählen Sie ein Medium aus.", "Hinweis", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        
-        int result = JOptionPane.showConfirmDialog(this, 
-                "Möchten Sie dieses Medium wirklich löschen?", 
-                "Löschen bestätigen", 
+
+        int result = JOptionPane.showConfirmDialog(this,
+                "Möchten Sie dieses Medium wirklich löschen?",
+                "Löschen bestätigen",
                 JOptionPane.YES_NO_OPTION);
-        
+
         if (result == JOptionPane.YES_OPTION) {
             medienListe.remove(selectedRow);
             updateTable();
@@ -491,7 +493,7 @@ public class BuechereiUI extends JFrame {
             JOptionPane.showMessageDialog(this, "Bitte wählen Sie ein Medium aus.", "Hinweis", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        
+
         Medium medium = medienListe.get(selectedRow);
         if (medium.isAusgeliehen()) {
             // Medium zurückgeben
@@ -511,7 +513,7 @@ public class BuechereiUI extends JFrame {
             JOptionPane.showMessageDialog(this, "Bitte wählen Sie ein Medium aus.", "Hinweis", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        
+
         Medium medium = medienListe.get(selectedRow);
         showDetailsWindow(medium);
     }
@@ -526,7 +528,7 @@ public class BuechereiUI extends JFrame {
         JTextArea detailsTextArea = new JTextArea();
         detailsTextArea.setEditable(false);
         detailsTextArea.setFont(new Font("Monospaced", Font.PLAIN, 18));
-        detailsTextArea.setText("=== MEDIUM DETAILS ===\n\n"+medium.toString());
+        detailsTextArea.setText("=== MEDIUM DETAILS ===\n\n" + medium.toString());
 
         JScrollPane scrollPane = new JScrollPane(detailsTextArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -548,12 +550,12 @@ public class BuechereiUI extends JFrame {
         tableModel.setRowCount(0);
         for (Medium medium : medienListe) {
             tableModel.addRow(new Object[]{
-                medium.getInventarNummer(),
-                medium.getTitle(),
-                medium.getType(),
-                medium.getGenre(),
-                medium.getZustand(),
-                medium.isAusgeliehen() ? "Ja" : "Nein"
+                    medium.getInventarNummer(),
+                    medium.getTitle(),
+                    medium.getType(),
+                    medium.getGenre(),
+                    medium.getZustand(),
+                    medium.isAusgeliehen() ? "Ja" : "Nein"
             });
         }
         saveAll();
@@ -574,25 +576,25 @@ public class BuechereiUI extends JFrame {
     private void createSampleData() {
         // Beispiel-Daten für Demonstration
         Buch buch = new Buch(
-            "B001", 
-            "Der Herr der Ringe", 
-            Genere.HORROR,
-            Zustand.LEICHT_GEBRAUCHT, 
-            "978-3608939812", 
-            1216, 
-            "Ein episches Fantasy-Abenteuer", 
-            new Author("J.R.R. Tolkien")
+                "B001",
+                "Der Herr der Ringe",
+                Genere.HORROR,
+                Zustand.LEICHT_GEBRAUCHT,
+                "978-3608939812",
+                1216,
+                "Ein episches Fantasy-Abenteuer",
+                new Author("J.R.R. Tolkien")
         );
-        
+
         DVD dvd = new DVD(
-            "D001", 
-            "Inception", 
-            Genere.SCIFI, 
-            Zustand.NEU, 
-            148, 
-            1, 
-            "Christopher Nolan", 
-            Fsk.FSK_12
+                "D001",
+                "Inception",
+                Genere.SCIFI,
+                Zustand.NEU,
+                148,
+                1,
+                "Christopher Nolan",
+                Fsk.FSK_12
         );
 
         Magazin javaMagzin = new Magazin("000003",
@@ -610,7 +612,7 @@ public class BuechereiUI extends JFrame {
                 90,
                 1,
                 12);
-        
+
         medienListe.add(buch);
         medienListe.add(dvd);
         medienListe.add(javaMagzin);
