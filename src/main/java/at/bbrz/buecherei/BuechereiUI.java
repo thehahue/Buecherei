@@ -121,7 +121,101 @@ public class BuechereiUI extends JFrame {
         if (medium instanceof Buch) {
             showEditBuchDialog(medium, selectedRow);
         }
+        if (medium instanceof DVD) {
+            showEditDVD(medium, selectedRow);
+        }
     }
+
+    private void showEditDVD(Medium medium, int selectedRow) {
+        DVD dvd = (DVD) medium;
+
+        JDialog dialog = new JDialog(this, "DVD bearbeiten", true);
+        dialog.setSize(500, 380);
+        dialog.setLayout(new BorderLayout());
+
+        JPanel panel = new JPanel(new GridLayout(0, 2, 5, 5));
+
+        JTextField invNrField = new JTextField(dvd.getInventarNummer());
+        JTextField titleField = new JTextField(dvd.getTitle());
+        JComboBox<Genere> genreCombo = new JComboBox<>(Genere.values());
+        genreCombo.setSelectedItem(dvd.getGenre());
+        JComboBox<Zustand> zustandCombo = new JComboBox<>(Zustand.values());
+        zustandCombo.setSelectedItem(dvd.getZustand());
+        JTextField spielDauerField = new JTextField(String.valueOf(((SpeicherMedium) dvd).getSpielDauer()));
+        JTextField teileField = new JTextField(String.valueOf(((SpeicherMedium) dvd).getTeile()));
+        JTextField regiseurField = new JTextField(dvd.getRegiseur());
+        JComboBox<Fsk> fskCombo = new JComboBox<>(Fsk.values());
+        fskCombo.setSelectedItem(dvd.getFsk());
+
+        panel.add(new JLabel("Inventar-Nr:"));
+        panel.add(invNrField);
+        panel.add(new JLabel("Titel:"));
+        panel.add(titleField);
+        panel.add(new JLabel("Genre:"));
+        panel.add(genreCombo);
+        panel.add(new JLabel("Zustand:"));
+        panel.add(zustandCombo);
+        panel.add(new JLabel("Spieldauer:"));
+        panel.add(spielDauerField);
+        panel.add(new JLabel("Teile:"));
+        panel.add(teileField);
+        panel.add(new JLabel("Regisseur:"));
+        panel.add(regiseurField);
+        panel.add(new JLabel("FSK:"));
+        panel.add(fskCombo);
+
+        JButton saveButton = new JButton("Änderungen speichern");
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    validateValues(spielDauerField.getText(), teileField.getText());
+
+                    DVD updated = new DVD(
+                            invNrField.getText(),
+                            titleField.getText(),
+                            (Genere) genreCombo.getSelectedItem(),
+                            (Zustand) zustandCombo.getSelectedItem(),
+                            Integer.parseInt(spielDauerField.getText()),
+                            Integer.parseInt(teileField.getText()),
+                            regiseurField.getText(),
+                            (Fsk) fskCombo.getSelectedItem()
+                    );
+                    if (dvd.isAusgeliehen()) updated.ausleihen();
+                    medienListe.set(selectedRow, updated);
+                    updateTable();
+                    dialog.dispose();
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(dialog, ex.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+
+            private void validateValues(String eigegebeneSpieldauer, String eingegebeneTeile) {
+                try {
+                    Integer.parseInt(eigegebeneSpieldauer);
+                } catch (NumberFormatException ex) {
+                    throw new NumberFormatException("Die eingegebene Spieldauer ist keine Zahl");
+                }
+
+                try {
+                    Integer.parseInt(eingegebeneTeile);
+                } catch (NumberFormatException ex) {
+                    throw new NumberFormatException("Die eingegebenen Teile sind keine Zahl");
+                }
+            }
+        });
+
+        JPanel wrapper = new JPanel(new BorderLayout());
+        wrapper.add(panel, BorderLayout.CENTER);
+        JPanel bottom = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        bottom.add(saveButton);
+        wrapper.add(bottom, BorderLayout.SOUTH);
+        dialog.add(wrapper, BorderLayout.CENTER);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }
+
+
 
     private void showEditBuchDialog(Medium medium, int selectedRow) {
         Buch buch = (Buch) medium; // Cast medium to Book
