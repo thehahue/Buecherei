@@ -709,11 +709,11 @@ public class BuechereiUI extends JFrame {
         updateTable();
     }
 
-    private void validateIntegerTextField(String eigegebeneSpieldauer, String s) {
+    private void validateIntegerTextField(String givenIntegerText, String errorMessage) {
         try {
-            Integer.parseInt(eigegebeneSpieldauer);
+            Integer.parseInt(givenIntegerText);
         } catch (NumberFormatException ex) {
-            throw new NumberFormatException(s);
+            throw new NumberFormatException(errorMessage);
         }
     }
 
