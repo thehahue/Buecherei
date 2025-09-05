@@ -180,7 +180,22 @@ public class BuechereiUI extends JFrame {
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO nächste Mal
+               Buch updated = new Buch(invNrField.getText(),
+                       titleField.getText(),
+                       (Genere) genereJComboBox.getSelectedItem(),
+                       (Zustand) zustandJComboBox.getSelectedItem(),
+                       isbnField.getText(),
+                       Integer.parseInt(seitenField.getText()),
+                       klappenTextField.getText(),
+                       new Author(authorTextField.getText()));
+
+               if (buch.isAusgeliehen()) {
+                   updated.ausleihen();
+               } else {
+                   updated.rueckgabe();
+               }
+
+                System.out.println(updated);
             }
         });
 
