@@ -191,17 +191,8 @@ public class BuechereiUI extends JFrame {
             }
 
             private void validateValues(String eigegebeneSpieldauer, String eingegebeneTeile) {
-                try {
-                    Integer.parseInt(eigegebeneSpieldauer);
-                } catch (NumberFormatException ex) {
-                    throw new NumberFormatException("Die eingegebene Spieldauer ist keine Zahl");
-                }
-
-                try {
-                    Integer.parseInt(eingegebeneTeile);
-                } catch (NumberFormatException ex) {
-                    throw new NumberFormatException("Die eingegebenen Teile sind keine Zahl");
-                }
+                validateIntegerTextField(eigegebeneSpieldauer, "Die eingegebene Spieldauer ist keine Zahl");
+                validateIntegerTextField(eingegebeneTeile, "Die eingegebenen Teile sind keine Zahl");
             }
         });
 
@@ -716,6 +707,14 @@ public class BuechereiUI extends JFrame {
         medienListe.add(javaMagzin);
         medienListe.add(schallplatte);
         updateTable();
+    }
+
+    private void validateIntegerTextField(String eigegebeneSpieldauer, String s) {
+        try {
+            Integer.parseInt(eigegebeneSpieldauer);
+        } catch (NumberFormatException ex) {
+            throw new NumberFormatException(s);
+        }
     }
 
     public static void main(String[] args) {
