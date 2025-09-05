@@ -180,24 +180,28 @@ public class BuechereiUI extends JFrame {
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Buch updated = new Buch(invNrField.getText(),
-                        titleField.getText(),
-                        (Genere) genereJComboBox.getSelectedItem(),
-                        (Zustand) zustandJComboBox.getSelectedItem(),
-                        isbnField.getText(),
-                        Integer.parseInt(seitenField.getText()),
-                        klappenTextField.getText(),
-                        new Author(authorTextField.getText()));
+                try {
+                    Buch updated = new Buch(invNrField.getText(),
+                            titleField.getText(),
+                            (Genere) genereJComboBox.getSelectedItem(),
+                            (Zustand) zustandJComboBox.getSelectedItem(),
+                            isbnField.getText(),
+                            Integer.parseInt(seitenField.getText()),
+                            klappenTextField.getText(),
+                            new Author(authorTextField.getText()));
 
-                if (buch.isAusgeliehen()) {
-                    updated.ausleihen();
-                } else {
-                    updated.rueckgabe();
+                    if (buch.isAusgeliehen()) {
+                        updated.ausleihen();
+                    } else {
+                        updated.rueckgabe();
+                    }
+
+                    medienListe.set(selectedRow, updated); //Wir tauschen buch mit updated an Stelle selectedRow
+                    updateTable();
+                    dialog.dispose();
+                } catch (NumberFormatException ex ) {
+                    JOptionPane.showMessageDialog(dialog, "Bitte geben Sie eine gültige Zahl für Seiten an.", "Fehler", JOptionPane.ERROR_MESSAGE);
                 }
-
-                medienListe.set(selectedRow, updated); //Wir tauschen buch mit updated an Stelle selectedRow
-                updateTable();
-                dialog.dispose();
             }
         });
 
