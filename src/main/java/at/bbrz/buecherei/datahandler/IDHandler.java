@@ -2,7 +2,9 @@ package at.bbrz.buecherei.datahandler;
 
 import at.bbrz.buecherei.model.Medium;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 public class IDHandler {
 
@@ -21,13 +23,11 @@ public class IDHandler {
     }
 
     private Long getcurrentHighestID(List<Medium> data) {
-        Long currentHighestId = 0L;
-        for (Medium m : data) {
-            Long id = m.getId();
-            if (id == null) continue;
-            if (id > currentHighestId) currentHighestId = id;
-        }
-        return currentHighestId;
+        return data.stream()
+                .map(Medium::getId)
+                .filter(Objects::nonNull)
+                .max(Long::compareTo)
+                .orElse(0L);
     }
 
 }
