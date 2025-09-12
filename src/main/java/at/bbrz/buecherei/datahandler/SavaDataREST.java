@@ -19,10 +19,10 @@ public class SavaDataREST implements SaveDataInterface{
     private URI uri;
 
 
-    public SavaDataREST(URI URI) {
-        this.uri = URI;
+    public SavaDataREST(URI uri, HttpClient httpClient) {
+        this.uri = uri;
         this.objectMapper = new ObjectMapper();
-        this.httpClient = HttpClient.newHttpClient();
+        this.httpClient = httpClient;
         this.idHandler = new IDHandler();
     }
 
