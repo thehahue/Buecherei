@@ -20,6 +20,11 @@ public class SaveDataFile implements SaveDataInterface {
         this.idHandler = new IDHandler();
     }
 
+    public SaveDataFile(File file) {
+        this.objectMapper = new ObjectMapper();
+        this.file = file;
+        this.idHandler = new IDHandler();
+    }
 
     @Override
     public void saveData(List<Medium> data) {
