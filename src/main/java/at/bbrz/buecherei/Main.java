@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
 
 
-        Buch harryPotter1 = new Buch("00001",
+        Buch harryPotter1 = new Buch(new InventarNummer(1),
                 "Harry Potter und der Stein der Weisen",
                 Genere.FANTASY,
                 Zustand.NEU,
@@ -28,7 +28,7 @@ public class Main {
 
         System.out.println("-------------------------------------------------");
 
-        Buch harryPotter2 = new Buch("00002",
+        Buch harryPotter2 = new Buch(new InventarNummer(2),
                 "Harry Potter und die Kammer des Schreckens",
                 Genere.FANTASY,
                 Zustand.LEICHT_GEBRAUCHT,
@@ -44,7 +44,7 @@ public class Main {
 
         System.out.println("-------------------------------------------------");
 
-        Magazin javaMagzin = new Magazin("000003",
+        Magazin javaMagzin = new Magazin(new InventarNummer(3),
                 "Java Magazin 01/2025",
                 Genere.IT,
                 Zustand.NEU,

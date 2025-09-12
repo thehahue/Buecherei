@@ -7,7 +7,7 @@ public class Buch extends Printmedium {
     private String klappenText;
     private Author author;
 
-    public Buch(String inventarNummer, String title, Genere genre, Zustand zustand, String isbn, int seiten, String klappenText, Author author) {
+    public Buch(InventarNummer inventarNummer, String title, Genere genre, Zustand zustand, String isbn, int seiten, String klappenText, Author author) {
         super(inventarNummer, title, genre, zustand, isbn, seiten, "Buch");
         this.klappenText = klappenText;
         this.author = author;

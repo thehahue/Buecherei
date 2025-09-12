@@ -6,7 +6,7 @@ import at.bbrz.buecherei.model.enums.Zustand;
 public class Magazin extends Printmedium {
     private String redaktion;
 
-    public Magazin(String inventarNummer, String title, Genere genre, Zustand zustand, String isbn, int seiten, String redaktion) {
+    public Magazin(InventarNummer inventarNummer, String title, Genere genre, Zustand zustand, String isbn, int seiten, String redaktion) {
         super(inventarNummer, title, genre, zustand, isbn, seiten, "Magazin");
         this.redaktion = redaktion;
     }

@@ -4,6 +4,7 @@ import at.bbrz.buecherei.model.*;
 import at.bbrz.buecherei.model.enums.Fsk;
 import at.bbrz.buecherei.model.enums.Genere;
 import at.bbrz.buecherei.model.enums.Zustand;
+import at.bbrz.buecherei.util.InventarNummerFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -23,9 +24,11 @@ public class BuechereiUI extends JFrame {
     private DefaultTableModel tableModel;
     private ObjectMapper objectMapper;
     private File file;
+    private InventarNummerFactory inventarNummerFactory;
 
     public BuechereiUI() {
         medienListe = new ArrayList<>();
+        inventarNummerFactory = new InventarNummerFactory(medienListe);
         objectMapper = new ObjectMapper();
         file = new File("mediums.json");
         initializeUI();
@@ -139,7 +142,6 @@ public class BuechereiUI extends JFrame {
         dialog.setLayout(new BorderLayout());
         JPanel panel = new JPanel(new GridLayout(0, 2, 5, 5));
 
-        JTextField invNrField = new JTextField(schallplatte.getInventarNummer());
         JTextField titleField = new JTextField(schallplatte.getTitle());
         JComboBox<Genere> genreCombo = new JComboBox<>(Genere.values());
         genreCombo.setSelectedItem(schallplatte.getGenre());
@@ -149,8 +151,6 @@ public class BuechereiUI extends JFrame {
         JTextField teileField = new JTextField(""+schallplatte.getTeile());
         JTextField liederField = new JTextField(""+schallplatte.getAnzahlLieder());
 
-        panel.add(new JLabel("Inventar-Nr:"));
-        panel.add(invNrField);
         panel.add(new JLabel("Titel:"));
         panel.add(titleField);
         panel.add(new JLabel("Genre:"));
@@ -170,7 +170,7 @@ public class BuechereiUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     Schallplatte updated = new Schallplatte(
-                            invNrField.getText(),
+                            schallplatte.getInventarNummer(),
                             titleField.getText(),
                             (Genere) genreCombo.getSelectedItem(),
                             (Zustand) zustandCombo.getSelectedItem(),
@@ -206,7 +206,6 @@ public class BuechereiUI extends JFrame {
 
         JPanel panel = new JPanel(new GridLayout(0, 2, 5, 5));
 
-        JTextField invNrField = new JTextField(magazin.getInventarNummer());
         JTextField titleField = new JTextField(magazin.getTitle());
         JComboBox<Genere> genreCombo = new JComboBox<>(Genere.values());
         genreCombo.setSelectedItem(magazin.getGenre());
@@ -216,8 +215,6 @@ public class BuechereiUI extends JFrame {
         JTextField seitenField = new JTextField(String.valueOf(magazin.getSeiten()));
         JTextField redaktionField = new JTextField(magazin.getRedaktion());
 
-        panel.add(new JLabel("Inventar-Nr:"));
-        panel.add(invNrField);
         panel.add(new JLabel("Titel:"));
         panel.add(titleField);
         panel.add(new JLabel("Genre:"));
@@ -237,7 +234,7 @@ public class BuechereiUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     Magazin updated = new Magazin(
-                            invNrField.getText(),
+                            magazin.getInventarNummer(),
                             titleField.getText(),
                             (Genere) genreCombo.getSelectedItem(),
                             (Zustand) zustandCombo.getSelectedItem(),
@@ -277,7 +274,6 @@ public class BuechereiUI extends JFrame {
 
         JPanel panel = new JPanel(new GridLayout(0, 2, 5, 5));
 
-        JTextField invNrField = new JTextField(dvd.getInventarNummer());
         JTextField titleField = new JTextField(dvd.getTitle());
         JComboBox<Genere> genreCombo = new JComboBox<>(Genere.values());
         genreCombo.setSelectedItem(dvd.getGenre());
@@ -289,8 +285,6 @@ public class BuechereiUI extends JFrame {
         JComboBox<Fsk> fskCombo = new JComboBox<>(Fsk.values());
         fskCombo.setSelectedItem(dvd.getFsk());
 
-        panel.add(new JLabel("Inventar-Nr:"));
-        panel.add(invNrField);
         panel.add(new JLabel("Titel:"));
         panel.add(titleField);
         panel.add(new JLabel("Genre:"));
@@ -314,7 +308,7 @@ public class BuechereiUI extends JFrame {
                     validateValues(spielDauerField.getText(), teileField.getText());
 
                     DVD updated = new DVD(
-                            invNrField.getText(),
+                            dvd.getInventarNummer(),
                             titleField.getText(),
                             (Genere) genreCombo.getSelectedItem(),
                             (Zustand) zustandCombo.getSelectedItem(),
@@ -358,7 +352,6 @@ public class BuechereiUI extends JFrame {
 
         JPanel panel = new JPanel(new GridLayout(0, 2, 5, 5));
 
-        JTextField invNrField = new JTextField(buch.getInventarNummer());
         JTextField titleField = new JTextField(buch.getTitle());
         JComboBox<Genere> genereJComboBox = new JComboBox<>(Genere.values());
         genereJComboBox.setSelectedItem(buch.getGenre());
@@ -376,10 +369,6 @@ public class BuechereiUI extends JFrame {
 //            inhalt = "";
 //        }
 //        JTextField authorTextField = new JTextField(inhalt);
-
-
-        panel.add(new JLabel("Inventar-Nr:"));
-        panel.add(invNrField);
 
         panel.add(new JLabel("Titel:"));
         panel.add(titleField);
@@ -407,7 +396,7 @@ public class BuechereiUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Buch updated = new Buch(invNrField.getText(),
+                    Buch updated = new Buch(buch.getInventarNummer(),
                             titleField.getText(),
                             (Genere) genereJComboBox.getSelectedItem(),
                             (Zustand) zustandJComboBox.getSelectedItem(),
@@ -474,7 +463,6 @@ public class BuechereiUI extends JFrame {
     private JPanel createBuchPanel(JDialog dialog) {
         JPanel panel = new JPanel(new GridLayout(0, 2, 5, 5));
 
-        JTextField invNrField = new JTextField();
         JTextField titleField = new JTextField();
         JComboBox<Genere> genreCombo = new JComboBox<>(Genere.values());
         JComboBox<Zustand> zustandCombo = new JComboBox<>(Zustand.values());
@@ -483,8 +471,6 @@ public class BuechereiUI extends JFrame {
         JTextField klappenTextField = new JTextField();
         JTextField authorField = new JTextField();
 
-        panel.add(new JLabel("Inventar-Nr:"));
-        panel.add(invNrField);
         panel.add(new JLabel("Titel:"));
         panel.add(titleField);
         panel.add(new JLabel("Genre:"));
@@ -506,7 +492,7 @@ public class BuechereiUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     Buch buch = new Buch(
-                            invNrField.getText(),
+                            inventarNummerFactory.findNextInventarNummer(),
                             titleField.getText(),
                             (Genere) genreCombo.getSelectedItem(),
                             (Zustand) zustandCombo.getSelectedItem(),
@@ -533,7 +519,6 @@ public class BuechereiUI extends JFrame {
     private JPanel createMagazinPanel(JDialog dialog) {
         JPanel panel = new JPanel(new GridLayout(0, 2, 5, 5));
 
-        JTextField invNrField = new JTextField();
         JTextField titleField = new JTextField();
         JComboBox<Genere> genreCombo = new JComboBox<>(Genere.values());
         JComboBox<Zustand> zustandCombo = new JComboBox<>(Zustand.values());
@@ -541,8 +526,6 @@ public class BuechereiUI extends JFrame {
         JTextField seitenField = new JTextField();
         JTextField redaktionField = new JTextField();
 
-        panel.add(new JLabel("Inventar-Nr:"));
-        panel.add(invNrField);
         panel.add(new JLabel("Titel:"));
         panel.add(titleField);
         panel.add(new JLabel("Genre:"));
@@ -562,7 +545,7 @@ public class BuechereiUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     Magazin magazin = new Magazin(
-                            invNrField.getText(),
+                            inventarNummerFactory.findNextInventarNummer(),
                             titleField.getText(),
                             (Genere) genreCombo.getSelectedItem(),
                             (Zustand) zustandCombo.getSelectedItem(),
@@ -588,7 +571,6 @@ public class BuechereiUI extends JFrame {
     private JPanel createDVDPanel(JDialog dialog) {
         JPanel panel = new JPanel(new GridLayout(0, 2, 5, 5));
 
-        JTextField invNrField = new JTextField();
         JTextField titleField = new JTextField();
         JComboBox<Genere> genreCombo = new JComboBox<>(Genere.values());
         JComboBox<Zustand> zustandCombo = new JComboBox<>(Zustand.values());
@@ -597,8 +579,6 @@ public class BuechereiUI extends JFrame {
         JTextField regiseurField = new JTextField();
         JComboBox<Fsk> fskCombo = new JComboBox<>(Fsk.values());
 
-        panel.add(new JLabel("Inventar-Nr:"));
-        panel.add(invNrField);
         panel.add(new JLabel("Titel:"));
         panel.add(titleField);
         panel.add(new JLabel("Genre:"));
@@ -620,7 +600,7 @@ public class BuechereiUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     DVD dvd = new DVD(
-                            invNrField.getText(),
+                            inventarNummerFactory.findNextInventarNummer(),
                             titleField.getText(),
                             (Genere) genreCombo.getSelectedItem(),
                             (Zustand) zustandCombo.getSelectedItem(),
@@ -647,7 +627,6 @@ public class BuechereiUI extends JFrame {
     private JPanel createSchallplattePanel(JDialog dialog) {
         JPanel panel = new JPanel(new GridLayout(0, 2, 5, 5));
 
-        JTextField invNrField = new JTextField();
         JTextField titleField = new JTextField();
         JComboBox<Genere> genreCombo = new JComboBox<>(Genere.values());
         JComboBox<Zustand> zustandCombo = new JComboBox<>(Zustand.values());
@@ -655,8 +634,6 @@ public class BuechereiUI extends JFrame {
         JTextField teileField = new JTextField();
         JTextField liederField = new JTextField();
 
-        panel.add(new JLabel("Inventar-Nr:"));
-        panel.add(invNrField);
         panel.add(new JLabel("Titel:"));
         panel.add(titleField);
         panel.add(new JLabel("Genre:"));
@@ -676,7 +653,7 @@ public class BuechereiUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     Schallplatte schallplatte = new Schallplatte(
-                            invNrField.getText(),
+                            inventarNummerFactory.findNextInventarNummer(),
                             titleField.getText(),
                             (Genere) genreCombo.getSelectedItem(),
                             (Zustand) zustandCombo.getSelectedItem(),
@@ -780,7 +757,7 @@ public class BuechereiUI extends JFrame {
         tableModel.setRowCount(0);
         for (Medium medium : medienListe) {
             tableModel.addRow(new Object[]{
-                    medium.getInventarNummer(),
+                    medium.getInventarNummer().getFormatedInventarNummer(),
                     medium.getTitle(),
                     medium.getType(),
                     medium.getGenre(),
@@ -806,7 +783,7 @@ public class BuechereiUI extends JFrame {
     private void createSampleData() {
         // Beispiel-Daten für Demonstration
         Buch buch = new Buch(
-                "B001",
+                new InventarNummer(1),
                 "Der Herr der Ringe",
                 Genere.HORROR,
                 Zustand.LEICHT_GEBRAUCHT,
@@ -817,7 +794,7 @@ public class BuechereiUI extends JFrame {
         );
 
         DVD dvd = new DVD(
-                "D001",
+                new InventarNummer(2),
                 "Inception",
                 Genere.SCIFI,
                 Zustand.NEU,
@@ -827,7 +804,7 @@ public class BuechereiUI extends JFrame {
                 Fsk.FSK_12
         );
 
-        Magazin javaMagzin = new Magazin("000003",
+        Magazin javaMagzin = new Magazin(new InventarNummer(3),
                 "Java Magazin 01/2025",
                 Genere.IT,
                 Zustand.NEU,
@@ -835,7 +812,7 @@ public class BuechereiUI extends JFrame {
                 82,
                 "Medien Gmbh");
 
-        Schallplatte schallplatte = new Schallplatte("S0001",
+        Schallplatte schallplatte = new Schallplatte(new InventarNummer(4),
                 "Four dimensions",
                 Genere.CLASSIC,
                 Zustand.NEU,

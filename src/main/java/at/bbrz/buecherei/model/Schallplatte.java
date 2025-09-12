@@ -6,7 +6,7 @@ import at.bbrz.buecherei.model.enums.Zustand;
 public class Schallplatte extends SpeicherMedium{
     private int anzahlLieder;
 
-    public Schallplatte(String inventarNummer, String title, Genere genre, Zustand zustand, int spielDauer, int teile, int anzahlLieder) {
+    public Schallplatte(InventarNummer inventarNummer, String title, Genere genre, Zustand zustand, int spielDauer, int teile, int anzahlLieder) {
         super(inventarNummer, title, genre, zustand, spielDauer, teile, "Schallplatte");
         this.anzahlLieder = anzahlLieder;
     }

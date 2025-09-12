@@ -7,7 +7,7 @@ public class SpeicherMedium extends Medium {
     private int spielDauer;
     private int teile;
 
-    public SpeicherMedium(String inventarNummer, String title, Genere genre, Zustand zustand, int spielDauer, int teile, String type) {
+    public SpeicherMedium(InventarNummer inventarNummer, String title, Genere genre, Zustand zustand, int spielDauer, int teile, String type) {
         super(inventarNummer, title, genre, zustand, type);
         this.spielDauer = spielDauer;
         this.teile = teile;

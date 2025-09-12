@@ -6,14 +6,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public abstract class Medium {
     @JsonProperty("inventarNr")
-    private String inventarNummer;
+    private InventarNummer inventarNummer;
     private String title;
     private Genere genre;
     private boolean ausgeliehen;
     private Zustand zustand;
     private String type;
 
-    protected Medium(String inventarNummer, String title, Genere genre, Zustand zustand, String type) {
+    protected Medium(InventarNummer inventarNummer, String title, Genere genre, Zustand zustand, String type) {
         this.inventarNummer = inventarNummer;
         this.title = title;
         this.genre = genre;
@@ -41,7 +41,7 @@ public abstract class Medium {
         return sb.toString();
     }
 
-    public String getInventarNummer() {
+    public InventarNummer getInventarNummer() {
         return inventarNummer;
     }
 
