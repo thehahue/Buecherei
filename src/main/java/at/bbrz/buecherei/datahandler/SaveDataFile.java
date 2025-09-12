@@ -14,12 +14,6 @@ public class SaveDataFile implements SaveDataInterface {
     private ObjectMapper objectMapper;
     private IDHandler idHandler;
 
-    public SaveDataFile() {
-        this.objectMapper = new ObjectMapper();
-        this.file = new File("savedData.json");
-        this.idHandler = new IDHandler();
-    }
-
     public SaveDataFile(File file) {
         this.objectMapper = new ObjectMapper();
         this.file = file;
