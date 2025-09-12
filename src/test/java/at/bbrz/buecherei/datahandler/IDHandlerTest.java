@@ -16,14 +16,14 @@ class IDHandlerTest {
     private IDHandler idHandler = new IDHandler();
 
     @Test
-    public void assignIdsWithoutIds() {
+    public void assignIdsWithoutIDs() {
         List<Medium> data = createSampleData();
         List<Medium> returnedList = idHandler.assignIds(data);
         assertEquals(returnedList.size(), returnedList.getLast().getId());
     }
 
     @Test
-    public void assignIdsWithGivenIds() {
+    public void assignIdsWithGivenIDs() {
         Long highestPresentID = 5L;
         int numOfAssignedIDs = 2;
         List<Medium> data = createSampleDataAndGiveTwoMediaIds(highestPresentID);
@@ -35,7 +35,7 @@ class IDHandlerTest {
     }
 
     @Test
-    public void assignIdsWithAllGivenIds() {
+    public void assignIdsWithAllGivenIDs() {
         List<Medium> data = createSampleDataAndGiveAllMediaAscendingIDs();
         List<Medium> returnedList = idHandler.assignIds(data);
         assertEquals(returnedList.size(), returnedList.getLast().getId());
