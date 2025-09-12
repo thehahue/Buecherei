@@ -12,6 +12,7 @@ public abstract class Medium {
     private boolean ausgeliehen;
     private Zustand zustand;
     private String type;
+    private Long id;
 
     protected Medium(String inventarNummer, String title, Genere genre, Zustand zustand, String type) {
         this.inventarNummer = inventarNummer;
@@ -63,6 +64,14 @@ public abstract class Medium {
 
     public String getType() {
         return type;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
 
