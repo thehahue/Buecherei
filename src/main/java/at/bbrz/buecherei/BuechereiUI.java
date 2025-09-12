@@ -124,6 +124,148 @@ public class BuechereiUI extends JFrame {
         if (medium instanceof DVD) {
             showEditDVD(medium, selectedRow);
         }
+        if (medium instanceof Magazin) {
+            showEditMagazin(medium, selectedRow);
+        }
+        if (medium instanceof Schallplatte) {
+            showEditSchallplatte(medium, selectedRow);
+        }
+    }
+
+    private void showEditSchallplatte(Medium medium, int selectedRow) {
+        Schallplatte schallplatte = (Schallplatte) medium;
+        JDialog dialog = new JDialog(this, "Schallplatte bearbeiten", true);
+        dialog.setSize(500, 400);
+        dialog.setLayout(new BorderLayout());
+        JPanel panel = new JPanel(new GridLayout(0, 2, 5, 5));
+
+        JTextField invNrField = new JTextField(schallplatte.getInventarNummer());
+        JTextField titleField = new JTextField(schallplatte.getTitle());
+        JComboBox<Genere> genreCombo = new JComboBox<>(Genere.values());
+        genreCombo.setSelectedItem(schallplatte.getGenre());
+        JComboBox<Zustand> zustandCombo = new JComboBox<>(Zustand.values());
+        zustandCombo.setSelectedItem(schallplatte.getZustand());
+        JTextField spielDauerField = new JTextField(""+schallplatte.getSpielDauer());
+        JTextField teileField = new JTextField(""+schallplatte.getTeile());
+        JTextField liederField = new JTextField(""+schallplatte.getAnzahlLieder());
+
+        panel.add(new JLabel("Inventar-Nr:"));
+        panel.add(invNrField);
+        panel.add(new JLabel("Titel:"));
+        panel.add(titleField);
+        panel.add(new JLabel("Genre:"));
+        panel.add(genreCombo);
+        panel.add(new JLabel("Zustand:"));
+        panel.add(zustandCombo);
+        panel.add(new JLabel("Spieldauer:"));
+        panel.add(spielDauerField);
+        panel.add(new JLabel("Teile:"));
+        panel.add(teileField);
+        panel.add(new JLabel("Anzahl Lieder:"));
+        panel.add(liederField);
+
+        JButton saveButton = new JButton("Speichern");
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Schallplatte updated = new Schallplatte(
+                            invNrField.getText(),
+                            titleField.getText(),
+                            (Genere) genreCombo.getSelectedItem(),
+                            (Zustand) zustandCombo.getSelectedItem(),
+                            Integer.parseInt(spielDauerField.getText()),
+                            Integer.parseInt(teileField.getText()),
+                            Integer.parseInt(liederField.getText())
+                    );
+                    if (medium.isAusgeliehen()) updated.ausleihen();
+                    medienListe.set(selectedRow, updated);
+                    updateTable();
+                    dialog.dispose();
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(dialog, "Bitte geben Sie gültige Zahlenwerte ein.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        JPanel wrapper = new JPanel(new BorderLayout());
+        wrapper.add(panel, BorderLayout.CENTER);
+        JPanel bottom = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        bottom.add(saveButton);
+        wrapper.add(bottom, BorderLayout.SOUTH);
+        dialog.add(wrapper, BorderLayout.CENTER);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }
+
+    private void showEditMagazin(Medium medium, int selectedRow) {
+        Magazin magazin = (Magazin) medium;
+        JDialog dialog = new JDialog(this, "Magazin bearbeiten", true);
+        dialog.setSize(500, 400);
+        dialog.setLayout(new BorderLayout());
+
+        JPanel panel = new JPanel(new GridLayout(0, 2, 5, 5));
+
+        JTextField invNrField = new JTextField(magazin.getInventarNummer());
+        JTextField titleField = new JTextField(magazin.getTitle());
+        JComboBox<Genere> genreCombo = new JComboBox<>(Genere.values());
+        genreCombo.setSelectedItem(magazin.getGenre());
+        JComboBox<Zustand> zustandCombo = new JComboBox<>(Zustand.values());
+        zustandCombo.setSelectedItem(magazin.getZustand());
+        JTextField isbnField = new JTextField(magazin.getIsbn());
+        JTextField seitenField = new JTextField(String.valueOf(magazin.getSeiten()));
+        JTextField redaktionField = new JTextField(magazin.getRedaktion());
+
+        panel.add(new JLabel("Inventar-Nr:"));
+        panel.add(invNrField);
+        panel.add(new JLabel("Titel:"));
+        panel.add(titleField);
+        panel.add(new JLabel("Genre:"));
+        panel.add(genreCombo);
+        panel.add(new JLabel("Zustand:"));
+        panel.add(zustandCombo);
+        panel.add(new JLabel("ISBN:"));
+        panel.add(isbnField);
+        panel.add(new JLabel("Seiten:"));
+        panel.add(seitenField);
+        panel.add(new JLabel("Redaktion:"));
+        panel.add(redaktionField);
+
+        JButton saveButton = new JButton("Speichern");
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Magazin updated = new Magazin(
+                            invNrField.getText(),
+                            titleField.getText(),
+                            (Genere) genreCombo.getSelectedItem(),
+                            (Zustand) zustandCombo.getSelectedItem(),
+                            isbnField.getText(),
+                            Integer.parseInt(seitenField.getText()),
+                            redaktionField.getText()
+                    );
+                    if (medium.isAusgeliehen()) updated.ausleihen();
+                    medienListe.set(selectedRow, updated);
+                    updateTable();
+                    dialog.dispose();
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(dialog, "Bitte geben Sie gültige Zahlenwerte ein.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        panel.add(new JLabel());
+        panel.add(saveButton);
+
+        JPanel wrapper = new JPanel(new BorderLayout());
+        wrapper.add(panel, BorderLayout.CENTER);
+        JPanel bottom = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        bottom.add(saveButton);
+        wrapper.add(bottom, BorderLayout.SOUTH);
+        dialog.add(wrapper, BorderLayout.CENTER);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 
     private void showEditDVD(Medium medium, int selectedRow) {
@@ -207,7 +349,6 @@ public class BuechereiUI extends JFrame {
     }
 
 
-
     private void showEditBuchDialog(Medium medium, int selectedRow) {
         Buch buch = (Buch) medium; // Cast medium to Book
 
@@ -284,7 +425,7 @@ public class BuechereiUI extends JFrame {
                     medienListe.set(selectedRow, updated); //Wir tauschen buch mit updated an Stelle selectedRow
                     updateTable();
                     dialog.dispose();
-                } catch (NumberFormatException ex ) {
+                } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(dialog, "Bitte geben Sie eine gültige Zahl für Seiten an.", "Fehler", JOptionPane.ERROR_MESSAGE);
                 }
             }
