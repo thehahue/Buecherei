@@ -23,6 +23,9 @@ public abstract class Medium {
         this.type = type;
     }
 
+    public Medium() {
+    }
+
     public void ausleihen() {
         this.ausgeliehen = true;
     }

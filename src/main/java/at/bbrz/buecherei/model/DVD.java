@@ -14,6 +14,9 @@ public class DVD extends SpeicherMedium {
         this.fsk = fsk;
     }
 
+    public DVD() {
+    }
+
     @Override
     public String toString() {
         return super.toString() +
