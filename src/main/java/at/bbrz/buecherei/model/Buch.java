@@ -13,6 +13,9 @@ public class Buch extends Printmedium {
         this.author = author;
     }
 
+    public Buch() {
+    }
+
     @Override
     public String toString() {
         return super.toString()+ "\n" +

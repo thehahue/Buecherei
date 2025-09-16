@@ -11,6 +11,9 @@ public class Magazin extends Printmedium {
         this.redaktion = redaktion;
     }
 
+    public Magazin() {
+    }
+
     public String getRedaktion() {
         return redaktion;
     }

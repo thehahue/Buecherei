@@ -11,6 +11,9 @@ public class Schallplatte extends SpeicherMedium{
         this.anzahlLieder = anzahlLieder;
     }
 
+    public Schallplatte() {
+    }
+
     public int getAnzahlLieder() {
         return anzahlLieder;
     }

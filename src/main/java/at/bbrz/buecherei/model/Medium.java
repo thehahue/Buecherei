@@ -3,7 +3,21 @@ package at.bbrz.buecherei.model;
 import at.bbrz.buecherei.model.enums.Genere;
 import at.bbrz.buecherei.model.enums.Zustand;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY,
+        property = "type",
+        visible = true
+)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Buch.class, name = "Buch"),
+        @JsonSubTypes.Type(value = DVD.class, name = "DVD"),
+        @JsonSubTypes.Type(value = Magazin.class, name = "Magazin"),
+        @JsonSubTypes.Type(value = Schallplatte.class, name = "Schallplatte")
+})
 public abstract class Medium {
     @JsonProperty("inventarNr")
     private InventarNummer inventarNummer;
@@ -12,6 +26,7 @@ public abstract class Medium {
     private boolean ausgeliehen;
     private Zustand zustand;
     private String type;
+    private Long id;
 
     protected Medium(InventarNummer inventarNummer, String title, Genere genre, Zustand zustand, String type) {
         this.inventarNummer = inventarNummer;
@@ -20,6 +35,9 @@ public abstract class Medium {
         this.zustand = zustand;
         this.ausgeliehen = false;
         this.type = type;
+    }
+
+    public Medium() {
     }
 
     public void ausleihen() {
@@ -63,6 +81,14 @@ public abstract class Medium {
 
     public String getType() {
         return type;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
 

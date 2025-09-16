@@ -13,6 +13,9 @@ public class SpeicherMedium extends Medium {
         this.teile = teile;
     }
 
+    public SpeicherMedium() {
+    }
+
     @Override
     public String toString() {
         return super.toString()+

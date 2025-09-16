@@ -13,6 +13,9 @@ public abstract class Printmedium extends Medium {
         this.seiten = seiten;
     }
 
+    public Printmedium() {
+    }
+
     @Override
     public String toString() {
         return super.toString()+"\n"+
