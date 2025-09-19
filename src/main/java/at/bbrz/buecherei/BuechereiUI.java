@@ -5,16 +5,12 @@ import at.bbrz.buecherei.model.enums.Fsk;
 import at.bbrz.buecherei.model.enums.Genere;
 import at.bbrz.buecherei.model.enums.Zustand;
 import at.bbrz.buecherei.util.InventarNummerFactory;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
+import at.bbrz.buecherei.persistence.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,15 +18,13 @@ public class BuechereiUI extends JFrame {
     private List<Medium> medienListe;
     private JTable medienTable;
     private DefaultTableModel tableModel;
-    private ObjectMapper objectMapper;
-    private File file;
     private InventarNummerFactory inventarNummerFactory;
+    private PersistData persistData;
 
     public BuechereiUI() {
+        persistData = new JsonFilePersister(this);
         medienListe = new ArrayList<>();
         inventarNummerFactory = new InventarNummerFactory(medienListe);
-        objectMapper = new ObjectMapper();
-        file = new File("mediums.json");
         initializeUI();
         createSampleData();
     }
@@ -769,15 +763,7 @@ public class BuechereiUI extends JFrame {
     }
 
     private void saveAll() {
-        try {
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(file, medienListe);
-        } catch (JsonProcessingException e) {
-            JOptionPane.showMessageDialog(this, "Json konnte nicht erstellt werden.",
-                    "Hinweis", JOptionPane.INFORMATION_MESSAGE);
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Medien konnten nicht gespeichert werden.",
-                    "Hinweis", JOptionPane.INFORMATION_MESSAGE);
-        }
+        persistData.save(medienListe);
     }
 
     private void createSampleData() {
