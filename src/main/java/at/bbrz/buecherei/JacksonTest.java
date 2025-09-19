@@ -43,8 +43,8 @@ public class JacksonTest {
 
         mapper.writerWithDefaultPrettyPrinter().writeValue(new File("testBuecher.json"), buecher);
 
-        Apfel apfel = new Apfel(1,"Granny Smith", 1.09f);
-        Banane banane = new Banane(2,17, true, "Chiquita");
+        Apfel apfel = new Apfel(1, Herkunft.EUROPA, "Granny Smith", 1.09f);
+        Banane banane = new Banane(2, Herkunft.AFRIKA, 17, true, "Chiquita");
         mapper.writerWithDefaultPrettyPrinter().writeValue(new File("apfel.json"), apfel);
         mapper.writerWithDefaultPrettyPrinter().writeValue(new File("banane.json"), banane);
 
@@ -58,13 +58,19 @@ public class JacksonTest {
 
     private static class Obst {
         private int menge;
+        private Herkunft herkunft;
 
-        public Obst(int menge) {
+        public Obst(int menge, Herkunft herkunft) {
             this.menge = menge;
+            this.herkunft = herkunft;
         }
 
         public int getMenge() {
             return menge;
+        }
+
+        public Herkunft getHerkunft() {
+            return herkunft;
         }
     }
 
@@ -72,8 +78,8 @@ public class JacksonTest {
         private String bezeichnung;
         private float preis;
 
-        public Apfel(int menge, String bezeichnung, float preis) {
-            super(menge);
+        public Apfel(int menge, Herkunft herkunft, String bezeichnung, float preis) {
+            super(menge, herkunft);
             this.bezeichnung = bezeichnung;
             this.preis = preis;
         }
@@ -96,8 +102,8 @@ public class JacksonTest {
         private boolean reif;
         private String sorte;
 
-        public Banane(int menge, int kruemmungsGrad, boolean reif, String sorte) {
-            super(menge);
+        public Banane(int menge, Herkunft herkunft, int kruemmungsGrad, boolean reif, String sorte) {
+            super(menge, herkunft);
             this.kruemmungsGrad = kruemmungsGrad;
             this.reif = reif;
             this.sorte = sorte;
@@ -130,5 +136,11 @@ public class JacksonTest {
         public List<Obst> getObstsalat() {
             return obstsalat;
         }
+    }
+
+    private static enum Herkunft {
+        EUROPA,
+        ASIEN,
+        AFRIKA
     }
 }
