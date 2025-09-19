@@ -43,14 +43,37 @@ public class JacksonTest {
 
         mapper.writerWithDefaultPrettyPrinter().writeValue(new File("testBuecher.json"), buecher);
 
-        mapper.writerWithDefaultPrettyPrinter().writeValue(new File("apfel.json"), new Apfel("Granny Smith", 1.09f));
+        Apfel apfel = new Apfel(1,"Granny Smith", 1.09f);
+        Banane banane = new Banane(2,17, true, "Chiquita");
+        mapper.writerWithDefaultPrettyPrinter().writeValue(new File("apfel.json"), apfel);
+        mapper.writerWithDefaultPrettyPrinter().writeValue(new File("banane.json"), banane);
+
+        Obstsalat obstsalat = new Obstsalat();
+        obstsalat.addObst(apfel);
+        obstsalat.addObst(banane);
+
+        mapper.writerWithDefaultPrettyPrinter().writeValue(new File("obstsalat.json"), obstsalat);
+
     }
 
-    private static class Apfel {
+    private static class Obst {
+        private int menge;
+
+        public Obst(int menge) {
+            this.menge = menge;
+        }
+
+        public int getMenge() {
+            return menge;
+        }
+    }
+
+    private static class Apfel extends Obst {
         private String bezeichnung;
         private float preis;
 
-        public Apfel(String bezeichnung, float preis) {
+        public Apfel(int menge, String bezeichnung, float preis) {
+            super(menge);
             this.bezeichnung = bezeichnung;
             this.preis = preis;
         }
@@ -65,6 +88,47 @@ public class JacksonTest {
 
         public String getAlles() {
             return bezeichnung+" kostet "+preis;
+        }
+    }
+
+    private static class Banane extends Obst {
+        private int kruemmungsGrad;
+        private boolean reif;
+        private String sorte;
+
+        public Banane(int menge, int kruemmungsGrad, boolean reif, String sorte) {
+            super(menge);
+            this.kruemmungsGrad = kruemmungsGrad;
+            this.reif = reif;
+            this.sorte = sorte;
+        }
+
+        public int getKruemmungsGrad() {
+            return kruemmungsGrad;
+        }
+
+        public boolean isReif() {
+            return reif;
+        }
+
+        public String getSorte() {
+            return sorte;
+        }
+
+        public String getText() {
+            return "Und sie ist "+(isReif() ? "Reif":"Unreif");
+        }
+    }
+
+    private static class Obstsalat {
+        private List<Obst> obstsalat = new ArrayList<>();
+
+        public void addObst(Obst obst) {
+            obstsalat.add(obst);
+        }
+
+        public List<Obst> getObstsalat() {
+            return obstsalat;
         }
     }
 }
